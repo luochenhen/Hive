@@ -1,0 +1,24 @@
+{
+  "name": "com.unity.plasticscm-cn",
+  "displayName": "Plastic SCM (CN)",
+  "version": "1.2.2-preview",
+  "unity": "2018.4",
+  "description": "The Plastic SCM package gives you the ability to use Plastic SCM, a leading version control solution for content creators, directly in Unity.\n\n• Checkin or undo pending changes.\n• Be notified of incoming changes and update your workspace.\n• Create and switch branches.\n• Consult your project history. See the list of changesets and their associated changes.\n• View file history and revert to a previous revision of a file.\n\nA Plastic SCM subscription is required. Learn more about how you can get started for free by visiting plasticscm.com.\n\nIf you wish to migrate from Collaborate to Plastic SCM, please consult our migration guide: https://forum.unity.com/threads/faq-plastic-scm-joining-unity-collaborate-migration-guide.963285",
+  "keywords": [
+    "plastic",
+    "plasticscm",
+    "collaborate",
+    "teams",
+    "team",
+    "cloud",
+    "backup"
+  ],
+  "repository": {
+    "url": "git@github.cds.internal.unity3d.com:nairufan/com.unity.plasticscm-cn.git",
+    "type": "git",
+    "revision": "bf628ec43067d1767fb3b12ddd553dd59e77bae2"
+  },
+  "upmCi": {
+    "footprint": "3911a16aa42f5631cdc78f39b0dbd80e83e28666"
+  }
+}
