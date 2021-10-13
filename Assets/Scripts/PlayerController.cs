@@ -14,9 +14,10 @@ public class PlayerController : MonoBehaviour
 
 
     public bool isGrounded;
-    public Transform feetPos;
+
+    public GameObject groundCheck;
     public float checkRadius;
-    public LayerMask whatIsGrounded;
+    //public LayerMask whatIsGrounded;
 
     private float jumpTimeCounter;
     public float jumpTime;
@@ -30,11 +31,20 @@ public class PlayerController : MonoBehaviour
 
     public MyJoyStick VJ;
 
+    public Rigidbody bullet;
+    public Rigidbody clone;
+    public Transform fPoint;
+
+    
+
     void Awake()
     {
       
         VJ.JumpEvent = Jump;
         this.fixedDeltaTime = Time.fixedDeltaTime;
+        isGrounded = false;
+        
+
     }
     void Jump(bool isJumping)
     {
@@ -44,8 +54,11 @@ public class PlayerController : MonoBehaviour
     void Punch(Vector2 direction,float dragTime)
     {
         direction = new Vector2(direction.x * punchForce * dragTime , direction.y * punchForce * dragTime);
-        Debug.Log(direction);
+        
         rb.AddForce(direction);
+        //Debug.Log(direction);
+        //clone = (Rigidbody)Instantiate(bullet, fPoint.position,fPoint.rotation);
+        //clone.velocity = rb.velocity;
         //rb.AddForce(direction, ForceMode2D.Impulse);
 
     }
@@ -55,19 +68,19 @@ public class PlayerController : MonoBehaviour
         if (isDragging)
         {
           
-            Time.timeScale = 0.2f;
+            Time.timeScale = 0.4f;
             Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
-            Debug.Log(isDragging);
+            //Debug.Log(isDragging);
         }
         else if(!isDragging)
         {
-            Debug.Log(isDragging);
+            //Debug.Log(isDragging);
             Time.timeScale = 1.0f;
             Time.fixedDeltaTime = this.fixedDeltaTime * Time.timeScale;
         }
     }
 
-    // Start is called before the first frame update
+ 
     void Start()
     {
         localScale = transform.localScale;
@@ -77,83 +90,45 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-
         dirX = CrossPlatformInputManager.GetAxis("Horizontal");
         dirY = CrossPlatformInputManager.GetAxis("Verticle");
-       
-        //if (CrossPlatformInputManager.GetButtonDown("Jump"))
-        //    Jump();
 
-        //isGrounded = Physics2D.OverlapCircle(feetPos.position,checkRadius,whatIsGrounded );
+        Collider[] collider = Physics.OverlapSphere(groundCheck.transform.position, checkRadius);
+        int i = 0;
+        while (i < collider.Length)
+        {
+            if (collider[i].tag == "Platform")
+            {
+                isGrounded = true;
+               
+            }
 
-        //if (isGrounded == true && CrossPlatformInputManager.GetButtonDown("Jump"))
-        //{
-        //    isJumping = true;
-        //    jumpTimeCounter = jumpTime;
-        //    rb.velocity = Vector2.up * jumpForce;
-
-        //}
-
-        //if (Input.GetKey(KeyCode.Space)&& isJumping==true)
-        //{
-        //    if (jumpTimeCounter > 0)
-        //    {
-        //        rb.velocity = Vector2.up * jumpForce;
-        //        jumpTimeCounter -= Time.deltaTime;
-        //    }
-        //    else
-        //        isJumping = false;
-        //}
-
-        //if (Input.GetKeyUp(KeyCode.Space))
-        //{
-        //    isJumping = false;
-        //}
+            i++;
+            
+        }
+        
 
     }
 
     void FixedUpdate()
-    {
-        //if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Moved)
-        //{
-        //    int dieX = 0;
-        //    int dieY = 0;
-        //    Input.GetTouch(0).deltaPosition
-        //    Vector2 touchDelPos = Input.GetTouch(0).deltaPosition;
-        //    //比较两个方向滑动的绝对值的大小
-        //    if (Mathf.Abs(touchDelPos.x) > Mathf.Abs(touchDelPos.y))
-        //    {
-        //       
-        //        if (touchDelPos.x > 10)
-        //        {
-        //            dieX = 1;
-        //            rb.velocity = new Vector2(dieX * speed, rb.velocity.y);
-        //        }//X方向的作用滑动
-        //        else if (touchDelPos.x < -10)
-        //        {
-        //            dieX = -1;
-        //            rb.velocity = new Vector2(dieX * speed, rb.velocity.y);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        if (touchDelPos.y > 10)
-        //        {
-        //            dieY = 1;
-        //        }
-        //        else if (touchDelPos.y < -10)
-        //        {
-        //            dieY = -1;
-        //        }
-        //    }
-        //}
-        //moveInput = joystick.Horizontal;
+    {          
         if(dirX!=0)
             rb.velocity = new Vector2(dirX * speed, rb.velocity.y);
 
         VJ.MoveEvent = Punch;
+            
         VJ.DragEvent = Charge;
 
+        //Debug.Log(clone.velocity == new Vector3(0, 0, 0));
+       
+        //if (clone.velocity==new Vector3(0,0,0))
+        //{
+        //    GameObject obj = GameObject.Find("Circle(Clone)");
+        //    Destroy(obj);
+        //}
+            
+        
+        //clone.position = rb.position;
     }
  
     void LateUpdate()
@@ -172,20 +147,6 @@ public class PlayerController : MonoBehaviour
             localScale.x *= -1;
         transform.localScale = localScale;
     }
+  
 
-    
-    /*if(按下==true)
-    {
-      if(抬起时间-按下时间<0.5s)
-        判定为跳跃
-        if(isGrounded==true)
-          跳跃;
-      if(抬起时间-按下时间>0.5s&&抬起时间-按下时间)
-         冲拳;
-         方向*时间*施加的力;
-      else
-         冲拳;
-         方向*最大时间*力;
-         按下==false;
-    */
 }

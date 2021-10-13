@@ -1,2 +1,0 @@
-# Hive
-Tecent Minigame Project

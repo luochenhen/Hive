@@ -12,11 +12,11 @@ public class Red : MonoBehaviour
     {
         // Hard Code for test
         if (this.name == "Red") {
-            this.GetComponent<Rigidbody>().velocity = new Vector3(0, -0.5f, 0);
+            this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }
         if (this.name == "Red (1)")
         {
-            this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0.5f, 0);
+            this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }
 
         selfTag = this.tag;
@@ -29,6 +29,19 @@ public class Red : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        Debug.Log(collision.collider.tag == "Player");
+        if (collision.collider.tag == "Player")
+        {
+            Vector3 direction = collision.collider.GetComponent<Rigidbody>().velocity.normalized;
+            if (direction.y < direction.x && direction.y > -direction.x)  //right
+                this.GetComponent<Rigidbody>().velocity = new Vector3(10, 0, 0);
+            else if (direction.y > direction.x && direction.y > -direction.x)  //up
+                this.GetComponent<Rigidbody>().velocity = new Vector3(0, 10, 0);
+            else if (direction.y < -direction.x && direction.y > direction.x)  //left
+                this.GetComponent<Rigidbody>().velocity = new Vector3(0, -10, 0);
+            else if (direction.y < direction.x && direction.y < -direction.x) //down
+                this.GetComponent<Rigidbody>().velocity = new Vector3(0, -10, 0);
+        }
         if (collision.collider.tag == selfTag)
         {
             //print("RED!!");
@@ -46,20 +59,24 @@ public class Red : MonoBehaviour
                 Destroy(this.gameObject);
             }
         }
-        else {
+        else 
+        {
             print(this.name + "--->" + collision.collider.name);
             Rigidbody Rb;
-            if (collision.collider.TryGetComponent<Rigidbody>(out Rb)) {
+            if (collision.collider.TryGetComponent<Rigidbody>(out Rb)) 
+            {
                 Rb.velocity = new Vector3(0, 0, 0);
             }
         }
     }
 
-    public void AddCount() {
+    public void AddCount() 
+    {
         this.destoryCount++;
     }
 
-    public void ReduceCount() {
+    public void ReduceCount() 
+    {
         this.destoryCount--;
     }
 

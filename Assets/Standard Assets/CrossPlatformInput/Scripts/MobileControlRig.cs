@@ -86,7 +86,7 @@ namespace UnityStandardAssets.CrossPlatformInput
 
         private void EnableControlRig(bool enabled)
         {
-            foreach (Transform t in transform)
+            foreach (Transform t in transform) 
             {
                 t.gameObject.SetActive(enabled);
             }

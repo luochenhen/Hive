@@ -11,11 +11,11 @@ public class Green : MonoBehaviour
     void Start()
     {
         // Hard Code for test
-        if (this.name == "Red")
+        if (this.name == "Green")
         {
-            this.GetComponent<Rigidbody>().velocity = new Vector3(0.5f, 0, 0);
+            this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }
-        if (this.name == "Red (2)")
+        if (this.name == "Green (2)")
         {
             this.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
         }
@@ -30,6 +30,18 @@ public class Green : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.collider.tag == "Player")
+        {
+            Vector3 direction = collision.collider.GetComponent<Rigidbody>().velocity.normalized;
+            if (direction.y < direction.x && direction.y > -direction.x)  //right
+                this.GetComponent<Rigidbody>().velocity = new Vector3(10, 0, 0);
+            else if (direction.y > direction.x && direction.y > -direction.x)  //up
+                this.GetComponent<Rigidbody>().velocity = new Vector3(0, 10, 0);
+            else if (direction.y < -direction.x && direction.y > direction.x)  //left
+                this.GetComponent<Rigidbody>().velocity = new Vector3(0, -10, 0);
+            else if (direction.y < direction.x && direction.y < -direction.x) //down
+                this.GetComponent<Rigidbody>().velocity = new Vector3(0, -10, 0);
+        }
         if (collision.collider.tag == selfTag)
         {
             //print("RED!!");
