@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         dirX = CrossPlatformInputManager.GetAxis("Horizontal");
-        dirY = CrossPlatformInputManager.GetAxis("Verticle");
+        dirY = CrossPlatformInputManager.GetAxis("Vertical");
 
         Collider[] collider = Physics.OverlapSphere(groundCheck.transform.position, checkRadius);
         int i = 0;

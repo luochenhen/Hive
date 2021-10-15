@@ -45,7 +45,7 @@ public class Blue : MonoBehaviour
         if (collision.collider.tag == selfTag)
         {
             //print("RED!!");
-            print(this.name + " : " + this.destoryCount);
+            //print(this.name + " : " + this.destoryCount);
             this.destoryName[this.destoryCount] = collision.collider.name;
             collision.collider.GetComponent<Rigidbody>().velocity = new Vector3(0, 0, 0);
             this.AddCount();
@@ -61,7 +61,7 @@ public class Blue : MonoBehaviour
         }
         else
         {
-            print(this.name + "--->" + collision.collider.name);
+            //print(this.name + "--->" + collision.collider.name);
             Rigidbody Rb;
             if (collision.collider.TryGetComponent<Rigidbody>(out Rb))
             {
